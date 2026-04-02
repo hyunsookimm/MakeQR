@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-MakeqrApplication<makeqr>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.khs.makeqr.MakeqrApplication",
+      "projectName": "makeqr",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
