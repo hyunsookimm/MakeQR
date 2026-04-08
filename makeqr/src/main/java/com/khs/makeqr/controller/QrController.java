@@ -18,7 +18,7 @@ public class QrController {
     @PostMapping("/generate")
     public ResponseEntity<byte[]> generate(@RequestBody QrRequest req) {
         try {
-            byte[] image = qrService.generate(req.getUrl(), req.getSize());
+            byte[] image = qrService.generate(req);
             return ResponseEntity.ok()
                     .contentType(MediaType.IMAGE_PNG)
                     .body(image);

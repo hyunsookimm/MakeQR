@@ -5,5 +5,7 @@ import lombok.Data;
 @Data
 public class QrRequest {
     private String url;
-    private int size; // 80, 120, 160, 200, 240, 300
+    private int size;
+    private String foregroundColor; // 예: "#000000"
+    private String backgroundColor; // 예: "#FFFFFF"
 }
