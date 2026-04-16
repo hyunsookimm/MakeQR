@@ -1,4 +1,8 @@
+import { Link, useNavigate } from 'react-router-dom'
+
 export default function Header() {
+  const navigate = useNavigate()
+
   return (
     <>
       <style>{`
@@ -19,7 +23,7 @@ export default function Header() {
           maxWidth: 1200, margin: '0 auto', padding: '0 24px',
           height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
-          <a href="/" className="header-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Link to="/" className="header-logo" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
             <div style={{
               width: 38, height: 38,
               background: 'linear-gradient(135deg, #0a8fa8, #0a6b80)',
@@ -33,24 +37,43 @@ export default function Header() {
             <span style={{ fontWeight: 800, color: '#fff', letterSpacing: '-0.8px' }}>
               make<span style={{ color: '#0a8fa8' }}>QR</span>
             </span>
-          </a>
+          </Link>
 
           <nav className="header-nav">
             {[
-              ['메이크큐알', '#about'],
+              ['메이크큐알', '/about'],
               ['디자인', '#portfolio'],
               ['시스템', '#system'],
               ['상담문의', '#contact'],
-            ].map(([label, href]) => (
-              <a key={label} href={href} style={{
-                color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 500,
-                textDecoration: 'none', padding: '8px 14px', borderRadius: 8,
-                transition: 'all 0.15s',
-              }}
-                onMouseEnter={e => { e.target.style.color = '#fff'; e.target.style.background = 'rgba(255,255,255,0.08)' }}
-                onMouseLeave={e => { e.target.style.color = 'rgba(255,255,255,0.6)'; e.target.style.background = 'transparent' }}
-              >{label}</a>
-            ))}
+            ].map(([label, href]) => {
+              const isRoute = href.startsWith('/')
+              return isRoute ? (
+                <Link key={label} to={href} style={{
+                  color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 500,
+                  textDecoration: 'none', padding: '8px 14px', borderRadius: 8,
+                  transition: 'all 0.15s',
+                }}
+                  onMouseEnter={e => { e.target.style.color = '#fff'; e.target.style.background = 'rgba(255,255,255,0.08)' }}
+                  onMouseLeave={e => { e.target.style.color = 'rgba(255,255,255,0.6)'; e.target.style.background = 'transparent' }}
+                >{label}</Link>
+              ) : (
+                <a key={label} href={href} onClick={e => {
+                  e.preventDefault()
+                  navigate('/')
+                  setTimeout(() => {
+                    const el = document.querySelector(href)
+                    if (el) el.scrollIntoView({ behavior: 'smooth' })
+                  }, 100)
+                }} style={{
+                  color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 500,
+                  textDecoration: 'none', padding: '8px 14px', borderRadius: 8,
+                  transition: 'all 0.15s', cursor: 'pointer',
+                }}
+                  onMouseEnter={e => { e.target.style.color = '#fff'; e.target.style.background = 'rgba(255,255,255,0.08)' }}
+                  onMouseLeave={e => { e.target.style.color = 'rgba(255,255,255,0.6)'; e.target.style.background = 'transparent' }}
+                >{label}</a>
+              )
+            })}
             <a href="https://www.brandqr.net" target="_blank" rel="noreferrer" style={{
               marginLeft: 8,
               background: 'linear-gradient(135deg, #0a8fa8, #0a6b80)',
