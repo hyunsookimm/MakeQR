@@ -8,11 +8,18 @@ export default function Header() {
       <style>{`
         .header-nav { display: flex; align-items: center; gap: 4px; }
         .header-logo span { font-size: 21px; }
+        .nav-link {
+          color: rgba(255,255,255,0.6); font-size: 14px; font-weight: 500;
+          text-decoration: none; padding: 8px 14px; border-radius: 8px;
+          transition: all 0.15s;
+        }
+        .nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
         @media (max-width: 768px) {
           .header-nav { display: none; }
           .header-logo span { font-size: 18px; }
         }
       `}</style>
+
       <header style={{
         background: 'rgba(10,10,10,0.85)',
         backdropFilter: 'blur(20px)',
@@ -40,40 +47,18 @@ export default function Header() {
           </Link>
 
           <nav className="header-nav">
-            {[
-              ['메이크큐알', '/about'],
-              ['디자인', '#portfolio'],
-              ['시스템', '#system'],
-              ['상담문의', '#contact'],
-            ].map(([label, href]) => {
-              const isRoute = href.startsWith('/')
-              return isRoute ? (
-                <Link key={label} to={href} style={{
-                  color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 500,
-                  textDecoration: 'none', padding: '8px 14px', borderRadius: 8,
-                  transition: 'all 0.15s',
-                }}
-                  onMouseEnter={e => { e.target.style.color = '#fff'; e.target.style.background = 'rgba(255,255,255,0.08)' }}
-                  onMouseLeave={e => { e.target.style.color = 'rgba(255,255,255,0.6)'; e.target.style.background = 'transparent' }}
-                >{label}</Link>
-              ) : (
-                <a key={label} href={href} onClick={e => {
-                  e.preventDefault()
-                  navigate('/')
-                  setTimeout(() => {
-                    const el = document.querySelector(href)
-                    if (el) el.scrollIntoView({ behavior: 'smooth' })
-                  }, 100)
-                }} style={{
-                  color: 'rgba(255,255,255,0.6)', fontSize: 14, fontWeight: 500,
-                  textDecoration: 'none', padding: '8px 14px', borderRadius: 8,
-                  transition: 'all 0.15s', cursor: 'pointer',
-                }}
-                  onMouseEnter={e => { e.target.style.color = '#fff'; e.target.style.background = 'rgba(255,255,255,0.08)' }}
-                  onMouseLeave={e => { e.target.style.color = 'rgba(255,255,255,0.6)'; e.target.style.background = 'transparent' }}
-                >{label}</a>
-              )
-            })}
+            <Link to="/about" className="nav-link">메이크큐알</Link>
+            <Link to="/design/brand" className="nav-link">디자인</Link>
+            <a className="nav-link" style={{ cursor: 'pointer' }} onClick={e => {
+              e.preventDefault()
+              navigate('/')
+              setTimeout(() => {
+                const el = document.querySelector('#system')
+                if (el) el.scrollIntoView({ behavior: 'smooth' })
+              }, 100)
+            }}>시스템</a>
+            <Link to="/about/contact" className="nav-link">상담문의</Link>
+
             <a href="https://www.brandqr.net" target="_blank" rel="noreferrer" style={{
               marginLeft: 8,
               background: 'linear-gradient(135deg, #0a8fa8, #0a6b80)',

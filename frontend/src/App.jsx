@@ -6,10 +6,13 @@ import About from './pages/About'
 import BusinessArea from './pages/BusinessArea'
 import Location from './pages/Location'
 import Contact from './pages/Contact'
+import DesignBrand from './pages/DesignBrand'
 
 function Layout() {
   const location = useLocation()
-  const isWhitePage = location.pathname.startsWith('/about')
+  const isWhitePage =
+    location.pathname.startsWith('/about') ||
+    location.pathname.startsWith('/design')
 
   return (
     <div style={{
@@ -26,6 +29,7 @@ function Layout() {
           <Route path="/about/business" element={<BusinessArea />} />
           <Route path="/about/location" element={<Location />} />
           <Route path="/about/contact" element={<Contact />} />
+          <Route path="/design/brand" element={<DesignBrand />} />
         </Routes>
       </main>
       <Footer />
