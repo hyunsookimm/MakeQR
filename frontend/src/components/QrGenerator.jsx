@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { generateQr } from '../api/qrApi'
+import { generateQr } from '../lib/qr'
 
 const SIZES = [80, 120, 160, 200, 240, 300]
 const TABS = [
@@ -62,8 +62,8 @@ export default function QrGenerator() {
     const data = getQrData()
     setError(''); setLoading(true)
     try {
-      const blob = await generateQr(data.trim(), size, fgColor, bgColor)
-      setQrImage(URL.createObjectURL(blob))
+      const dataUrl = await generateQr(data.trim(), size, fgColor, bgColor)
+      setQrImage(dataUrl)
     } catch { setError('QR 생성 중 오류가 발생했습니다.') }
     finally { setLoading(false) }
   }
